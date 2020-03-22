@@ -26,9 +26,9 @@ const param = req.query || req.params;
 const mobile = param.mobile;
 redis.setString(mobile,str1,360)
 resout.json({
-   
-    msg:"ok",
-    code:str1  //str1是自行产生的手机验证码，返回到前端以做验证
+    code:"000000",
+    msg:"Ok",
+    data:str1  //str1是自行产生的手机验证码，返回到前端以做验证
 })
 //引入SDK
 // const SMSClient = require('@alicloud/sms-sdk')

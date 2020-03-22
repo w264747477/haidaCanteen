@@ -17,6 +17,7 @@ var address = require('./routes/admin/address');
 var findPassword = require('./routes/admin/findPassword');
 //重置密码
 var resetPassword = require('./routes/admin/resetPassword');
+var upload = require('./routes/upload');
 var app = express();
 
 
@@ -34,55 +35,55 @@ app.all('*', (req, res, next) => {
   res.header("X-Powered-By", ' 3.2.1');
   // res.header("Content-Type", "application/json;charset=utf-8");
   res.header("Content-Type", "");
-  var url = req.url;
-  var handlerUrl = url.split('?')
-  //token拦截器,未登录无法访问
-  if (handlerUrl[0] == '/getCode' || handlerUrl[0] == '/register' || handlerUrl[0] == '/login' || handlerUrl[0] == '/codeLogin'
-  || handlerUrl[0] =='/findPassword'|| handlerUrl[0] =='/resetPassword') {
-    console.log('11111')
+  // var url = req.url;
+  // var handlerUrl = url.split('?')
+  // //token拦截器,未登录无法访问
+  // if (handlerUrl[0] == '/getCode' || handlerUrl[0] == '/register' || handlerUrl[0] == '/login' || handlerUrl[0] == '/codeLogin'
+  // || handlerUrl[0] =='/findPassword'|| handlerUrl[0] =='/resetPassword'||'/upload') {
+  //   console.log('11111')
     next();
-  } else {
-    const param = req.query || req.params;
-    var hasToken = false
-    var tokens = [];
-    db.selectAll('SELECT * from tok', function (err, data, fields) {
-      tokens = data;
-      console.log(param.token + '51行')
+  // } else {
+  //   const param = req.query || req.params;
+  //   var hasToken = false
+  //   var tokens = [];
+  //   db.selectAll('SELECT * from tok', function (err, data, fields) {
+  //     tokens = data;
+  //     console.log(param.token + '51行')
 
-      for (var i = 0; i < tokens.length; i++) {
-        console.log(param.token + '51行')
-         console.log(tokens[i].token)
-        if (param.token == tokens[i].token) {
-          hasToken = true
-        }
-      }
-      console.log(hasToken)
-      if (hasToken) {
-        next()
-      } else {
+  //     for (var i = 0; i < tokens.length; i++) {
+  //       console.log(param.token + '51行')
+  //        console.log(tokens[i].token)
+  //       if (param.token == tokens[i].token) {
+  //         hasToken = true
+  //       }
+  //     }
+  //     console.log(hasToken)
+  //     if (hasToken) {
+  //       next()
+  //     } else {
         
-        res.json({
-          "code": "HD0000", "msg": "身份信息已过期"
-        })
-      }
+  //       res.json({
+  //         "code": "HD0000", "msg": "身份信息已过期"
+  //       })
+  //     }
 
 
-      if (err) {
-        console.log(err);
-        return;
-      };
-    })
+  //     if (err) {
+  //       console.log(err);
+  //       return;
+  //     };
+  //   })
 
 
-    console.log(hasToken + '60行')
+  //   console.log(hasToken + '60行')
     
 
 
 
-  }
+  // }
 
-  console.log(handlerUrl[0])
-  console.log(url)
+  // console.log(handlerUrl[0])
+  // console.log(url)
 
 });
 // view engine setup
@@ -93,9 +94,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
+// app.use(express.static('public'))
 app.use(express.static(path.join(__dirname, 'public')));//静态托管文件
-//路由使用
+// 路由使用
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', login);
@@ -105,6 +106,7 @@ app.use('/getCode', getCode)
 app.use('/address', address)
 app.use('/findPassword', findPassword)
 app.use('/resetPassword', resetPassword)
+app.use('/upload', upload)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

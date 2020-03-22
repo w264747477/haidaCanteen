@@ -103,7 +103,7 @@ router.get('/', function(req, res, next) {
     
         res.json({"code":"HD0004","msg":"密码错误"})
     }else if(n !=1){
-        res.json({"code":"IR0003","msg":"手机号未注册"})
+        res.json({"code":"HD0003","msg":"手机号未注册"})
     }
 
     })

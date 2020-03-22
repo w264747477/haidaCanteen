@@ -9,20 +9,6 @@ const db = require("../../plugins/db"); //引入数据库封装模块
 //引入redis数据库
 const redis = require("../../plugins/redis");
 let a;
-//响应一个JSON数据
-// const responseJSON = function (res, ret) {
-//     if(typeof ret === 'undefined') {
-//         res.json({     code:'-200',     msg: '操作失败'
-//         });
-//     } else {
-//         res.json(ret);
-//     }};
-
-// router.use((req, res, next) => {
-//     console.log(`路由执行成功啦~~~`, Date.now());
-//     next()
-// })
-
 // 添加用户
 router.get('/', function (req, res, next) {
     const param = req.query || req.params;
