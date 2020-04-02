@@ -10,6 +10,7 @@ const conn = require('./db.config');
 const connection = mysql.createConnection(conn);
 // 查询所有数据
 let selectAll = (sql,callback)=>{
+    console.log(sql)
     connection.query(sql,(err,result)=>{
         if(err){
             console.log('错误信息-',err.sqlMessage);
@@ -62,13 +63,18 @@ let updateData=function(table,sets,where,callback){
 let deleteData=function(table,where,callback){
     var _WHERE='';
     for(var k2 in where){
-        //多个筛选条件使用  _WHERE+=k2+"='"+where[k2]+"' AND ";
-        _WHERE+= k2+"="+where[k2];
+        //多个筛选条件使用 
+       
+            _WHERE+=k2+"='"+where[k2]+"' AND ";
+       
+           
+        // _WHERE+= k2+"="+where[k2];
     }
+    _WHERE =  _WHERE.slice(0, _WHERE.length-5)
     // DELETE  FROM user WHERE UserId=12  注意UserId的数据类型要和数据库一致
     var sql="DELETE  FROM "+table+' WHERE '+_WHERE;
     connection.query(sql,callback);
-}
+} 
 exports.selectAll = selectAll;
 exports.insertData = insertData;
 exports.deleteData = deleteData;

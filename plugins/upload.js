@@ -39,31 +39,51 @@ router.post('/', function (req, res, next) {
       form.uploadDir = path.join(__dirname, '../public/images/');
       a = path.join(__dirname, '../public/images/');
       b = "images/"
+      // return;
     } else if (extname == '.mp3') {
       console.log('44')
       form.uploadDir = path.join(__dirname, '../public/mp3/');
       a = path.join(__dirname, '../public/mp3/');
       b = "mp3/"
+      // return;
+    } else if (extname == '.apk') {
+      console.log('44')
+      form.uploadDir = path.join(__dirname, '../public/apk/');
+      a = path.join(__dirname, '../public/apk/');
+      b = "apk/"
+      // return;
+    }else{
+      form.uploadDir = path.join(__dirname, '../public/other/');
+      a = path.join(__dirname, '../public/other/');
+      b = "other/"
+      // return;
     }
     // res.json({code: 1, data: { name: name, path: 'localhost:3000/'+b+name }});
     console.log(extname + '19行')
 
 let date = new Date();
+console.log(JSON.stringify(date))
 let date1 = format(JSON.stringify(date));
+console.log(date1)
 //时间格式化
 function format(date){
   var a= date.replace(/T/g,"-")
+  console.log(a)
   var n = a.replace(/:/g,"-")
-  var b = JSON.parse(n).split(".")
-  var c = JSON.stringify(b).split("-")
-  c[3]= JSON.stringify(JSON.parse( c[3])  +8) ;
-  var d = c.join("-")
-  var m = d.slice(2,21)
-  console.log(c)
-    console.log(m)
-    console.log(d[1])
+  console.log(n)
+   var b = n.slice(1,20)
+console.log(b)
+var c = JSON.stringify(b).split("-")
 
- return m
+c[3] = c[3]*1+8 +"h"
+c[4] = c[4] + "m"
+console.log(c)
+// var d = c.replace()
+// console.log(d+"82行")
+var d = c.join("-")
+var m = d.slice(0,d.length-1) + "s-" +"\""
+console.log(m)
+ return JSON.parse(m)
 }
 
 console.log(date)
@@ -76,7 +96,7 @@ console.log(date)
       // console.log(c)
       // console.log(d)
       // console.log(m)
-      // let  newpath =    a +m+ name ;
+      // let  newpath =   a +m+ name ;
      let  newpath =    a +date1+ name ;
     // let  newpath =    a +"2020-01-03:02"+ name ;
      console.log(newpath)

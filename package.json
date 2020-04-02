@@ -9,10 +9,12 @@
   "dependencies": {
     "@alicloud/pop-core": "^1.7.9",
     "@alicloud/sms-sdk": "^1.1.6",
+    "bufferutil": "^4.0.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-session": "^1.17.0",
+    "express-ws": "^4.0.0",
     "formidable": "^1.2.2",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
@@ -21,6 +23,8 @@
     "mysql": "^2.18.1",
     "node-uuid": "^1.4.8",
     "nodemon": "^2.0.2",
-    "redis": "^3.0.2"
+    "redis": "^3.0.2",
+    "socket.io": "^2.3.0",
+    "utf-8-validate": "^5.0.2"
   }
 }

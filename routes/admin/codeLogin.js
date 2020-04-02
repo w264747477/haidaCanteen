@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const token = require('../token') //引入
+const token = require('../../plugins/token') //引入
 // 导入MySQL模块
 const mysql = require('mysql');
 let a;
@@ -50,6 +50,7 @@ router.get('/', function (req, res, next) {
         if (code == pCode) {
             console.log('53行')
             codeFlag = true;
+          
         }
         if (err) {
             console.log(err);

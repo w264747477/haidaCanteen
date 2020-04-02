@@ -1,26 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const token = require('../token') //引入
+const token = require('../../plugins/token') //引入
 // 导入MySQL模块
 const mysql = require('mysql');
 let a;
-// const dbConfig = require('../plugins/db.config');
-// const loginSQL = require('../plugins/loginSql');
-// let pool = mysql.createConnection( dbConfig);
 const db = require("../../plugins/db"); //引入数据库封装模块
-//响应一个JSON数据
-// const responseJSON = function (res, ret) {
-//     if(typeof ret === 'undefined') {
-//         res.json({     code:'-200',     msg: '操作失败'
-//         });
-//     } else {
-//         res.json(ret);
-//     }};
 
-// router.use((req, res, next) => {
-//     console.log(`路由执行成功啦~~~`, Date.now());
-//     next()
-// })
 
 // 密码登录
 router.get('/', function(req, res, next) {
@@ -37,6 +22,7 @@ router.get('/', function(req, res, next) {
         // console.log(this.a);
 
         pMobile = param.mobile;
+        console.log(pMobile + "25行")
         pPassword = param.password;
         
         let num=0;
