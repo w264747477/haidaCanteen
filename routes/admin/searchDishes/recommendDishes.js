@@ -7,14 +7,17 @@ const db = require("../../../plugins/db"); //引入mysql数据库封装模块
 router.get('/', function(req, res, next) {
     const param = req.query || req.params;
     var mobile = param.mobile;
-   console.log(mobile+"10行")
-    db.selectAll("SELECT location,addr,name,gender,Tmobile,addressId,isPrimary FROM addReceiverAddress   WHERE mobile='" + mobile + "'", function (err, data, fields) {
+   
+    db.selectAll("SELECT * FROM recomendedDishers", function (err, data, fields) {
         if (err) {
             console.log(err);
             return;
         };
-     console.log(data)
-   res.json({"code":"000000","msg":"查询收货地址成功","data":data})
+  
+   res.json({"code":"000000","msg":"查询热门搜索成功","data":data})
+
+   
+
     })
 
 });

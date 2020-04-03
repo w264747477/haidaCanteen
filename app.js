@@ -27,6 +27,12 @@ var removeLove = require("./routes/admin/loveProduct/removeLove")
 var allLove = require("./routes/admin/loveProduct/allLove")
 var addReceiverAddress = require("./routes/admin/address/addReceiverAddress")
 var findAddress = require("./routes/admin/address/findAddress")
+var deleteAddress = require("./routes/admin/address/deleteAddress")
+var modifyAddress = require("./routes/admin/address/modifyAddress")
+var switchAddress = require("./routes/admin/address/switchAddress")
+var recommendDishes = require("./routes/admin/searchDishes/recommendDishes")
+
+var searchDishes = require("./routes/admin/searchDishes/searchDishes")
 var app = express();
 const session = require('express-session');
 const http = require('http');
@@ -120,7 +126,12 @@ app.use('/addLove',addLove)
 app.use('/removeLove',removeLove)
 app.use('/allLove',allLove)
 app.use('/addReceiverAddress',addReceiverAddress)
-app.use('/findAddress',addReceiverAddress)
+app.use('/findAddress',findAddress)
+app.use('/deleteAddress',deleteAddress)
+app.use('/modifyAddress',modifyAddress)
+app.use('/switchAddress',switchAddress)
+app.use('/recommendDishes',recommendDishes)
+app.use('/searchDishes',searchDishes)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

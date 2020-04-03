@@ -6,15 +6,18 @@ const db = require("../../../plugins/db"); //引入mysql数据库封装模块
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     const param = req.query || req.params;
-    var mobile = param.mobile;
-   console.log(mobile+"10行")
-    db.selectAll("SELECT location,addr,name,gender,Tmobile,addressId,isPrimary FROM addReceiverAddress   WHERE mobile='" + mobile + "'", function (err, data, fields) {
+   var name = param.name
+   
+    db.selectAll("SELECT * FROM allDishes WHERE allDishes.name = '" +name +"'" , function (err, data, fields) {
         if (err) {
             console.log(err);
             return;
         };
-     console.log(data)
-   res.json({"code":"000000","msg":"查询收货地址成功","data":data})
+  
+   res.json({"code":"000000","msg":"搜索菜品成功","data":data})
+
+   
+
     })
 
 });
