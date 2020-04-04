@@ -31,8 +31,8 @@ var deleteAddress = require("./routes/admin/address/deleteAddress")
 var modifyAddress = require("./routes/admin/address/modifyAddress")
 var switchAddress = require("./routes/admin/address/switchAddress")
 var recommendDishes = require("./routes/admin/searchDishes/recommendDishes")
-
 var searchDishes = require("./routes/admin/searchDishes/searchDishes")
+var carDishes = require("./routes/admin/searchDishes/carDishes")
 var app = express();
 const session = require('express-session');
 const http = require('http');
@@ -132,6 +132,7 @@ app.use('/modifyAddress',modifyAddress)
 app.use('/switchAddress',switchAddress)
 app.use('/recommendDishes',recommendDishes)
 app.use('/searchDishes',searchDishes)
+app.use('/carDishes',carDishes)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
