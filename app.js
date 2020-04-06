@@ -33,10 +33,11 @@ var switchAddress = require("./routes/admin/address/switchAddress")
 var recommendDishes = require("./routes/admin/searchDishes/recommendDishes")
 var searchDishes = require("./routes/admin/searchDishes/searchDishes")
 var carDishes = require("./routes/admin/searchDishes/carDishes")
+var pay = require("./routes/admin/pay")
 var app = express();
 const session = require('express-session');
 const http = require('http');
-//设置跨域访问
+//设置跨域访问  
 app.all('*', (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -133,6 +134,7 @@ app.use('/switchAddress',switchAddress)
 app.use('/recommendDishes',recommendDishes)
 app.use('/searchDishes',searchDishes)
 app.use('/carDishes',carDishes)
+app.use("/pay",pay)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
