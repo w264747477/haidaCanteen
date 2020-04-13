@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
         if (err) {
             console.log(err);
             return;
-        };
+        }; 
         console.log(data)
         if (data.length == "0") {
             res.json({ "code": "HD0007", "msg": "菜品未收藏" });
@@ -31,7 +31,7 @@ router.get('/', function (req, res, next) {
                 }                    
             }
                    
-                    res.json({ "code": "000000", "msg": "菜品未收藏" });
+                    res.json({ "code": "HD0007", "msg": "菜品未收藏" });
                     return;
            
         }

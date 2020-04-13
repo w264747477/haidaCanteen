@@ -7,14 +7,14 @@ const db = require("../../../plugins/db"); //引入mysql数据库封装模块
 router.get('/', function(req, res, next) {
     const param = req.query || req.params;
     var mobile = param.mobile;
-   console.log("allLove1")
-    db.selectAll("SELECT * FROM allDishes  , allLove WHERE allLove.mobile= '" + mobile  + "' and allLove.id =  allDishes.id ", function (err, data, fields) {
+   
+    db.selectAll("SELECT * FROM pay   WHERE mobile='" + mobile + "'", function (err, data, fields) {
         if (err) {
             console.log(err);
             return;
         };
-        console.log("allLove2")
-   res.json({"code":"000000","msg":"获取收藏菜品成功","data":data})
+  
+   res.json({"code":"000000","msg":"获取订单成功","data":data})
 
    
 

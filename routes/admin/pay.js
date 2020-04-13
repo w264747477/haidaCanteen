@@ -21,7 +21,7 @@ function getCode(){
 
     console.log(list)
    
-    db.insertData("pay", { mobile: mobile, orderNumber: orderNumber,allProducts:list[0],time:list[1],person:list[2],tool:list[3],remark:list[4],money:list[5] }, function (err, data, fields) {
+    db.insertData("pay", { mobile: mobile, orderNumber: orderNumber,allProducts:list[0],time:list[1],person:list[2],tool:list[3],remark:list[4],money:list[5],evaluate:"",status:0}, function (err, data, fields) {
         if (err) {
             console.log(err);
             return;

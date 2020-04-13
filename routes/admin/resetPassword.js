@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
     const c = redis.getString(pMobile)
     var code = '';
     c.then((data) => {
-        // console.log(data + '39行')
+        console.log(data + '39行')
         code = data
     })
     db.selectAll('SELECT * from register', function (err, data, fields) {
@@ -21,8 +21,14 @@ router.get('/', function(req, res, next) {
             return;
         };
    var dataList = data;
+   console.log(dataList)
+  
    for(var i=0;i<dataList.length;i++){
-       if(pMobile == dataList[i].mobile){
+       console.log("aaaa")
+       console.log(pMobile)
+       console.log(dataList[0].mobile)
+       console.log(code +"25");
+       if(pMobile === dataList[i].mobile){
            console.log(code +"26");
            console.log(pCode +"27")
            if(pCode == code){
@@ -35,11 +41,14 @@ router.get('/', function(req, res, next) {
                 };
             })
                res.json({"code":"000000","msg":"重置密码成功"})
+               return;
            }else{
             res.json({ "code": "HD0001", "msg": "验证码错误" })
+            return;
            }
        }else{
         res.json({ "code": "HD0003", "msg": "手机号未注册" })
+        return;
        }
    }
 

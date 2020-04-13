@@ -34,7 +34,7 @@ router.post('/', function (req, res, next) {
     console.log(JSON.stringify(name))
     var extname = path.extname(name);	 //获取文件的后缀名
     console.log(extname)
-    if (extname == '.png') {
+    if (extname == '.png' ||extname == '.jpg') {
       console.log('44')
       form.uploadDir = path.join(__dirname, '../public/images/');
       a = path.join(__dirname, '../public/images/');
@@ -45,7 +45,7 @@ router.post('/', function (req, res, next) {
       form.uploadDir = path.join(__dirname, '../public/mp3/');
       a = path.join(__dirname, '../public/mp3/');
       b = "mp3/"
-      // return;
+      // return; 
     } else if (extname == '.apk') {
       console.log('44')
       form.uploadDir = path.join(__dirname, '../public/apk/');
@@ -106,7 +106,7 @@ console.log(date)
           if(err){
             res.json({"code":"HD0005","msg":"上传失败"})
           }else{
-            res.json({code: "000000", data: { name: name, path: 'localhost:3000/'+b+date1+name }});
+            res.json({code: "000000", data: { name: name, path: 'http://qqahl.com:3000/'+b+date1+name }});
           }
          
         });

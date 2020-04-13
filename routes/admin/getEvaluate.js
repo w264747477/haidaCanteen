@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
-const db = require("../../../plugins/db"); //引入mysql数据库封装模块
+const db = require("../../plugins/db"); //引入mysql数据库封装模块
 
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     const param = req.query || req.params;
     var mobile = param.mobile;
-   console.log("allLove1")
-    db.selectAll("SELECT * FROM allDishes  , allLove WHERE allLove.mobile= '" + mobile  + "' and allLove.id =  allDishes.id ", function (err, data, fields) {
+ 
+    db.selectAll("SELECT * FROM pay  WHERE pay.mobile='" + mobile  + "' and pay.evaluate != '' ", function (err, data, fields) {
         if (err) {
             console.log(err);
             return;

@@ -12,7 +12,6 @@ var login = require('./routes/admin/login');
 var codeLogin = require('./routes/admin/codeLogin');
 var register = require('./routes/admin/register');
 var getCode = require('./routes/admin/getCode');
-
 //找回密码
 var findPassword = require('./routes/admin/findPassword');
 //重置密码
@@ -34,23 +33,35 @@ var recommendDishes = require("./routes/admin/searchDishes/recommendDishes")
 var searchDishes = require("./routes/admin/searchDishes/searchDishes")
 var carDishes = require("./routes/admin/searchDishes/carDishes")
 var pay = require("./routes/admin/pay")
+var checkOrder = require("./routes/admin/tradingOrder/checkOrder")
+var searchOrder = require("./routes/admin/tradingOrder/searchOrder")
+var refund = require("./routes/admin/refund")
+var evaluate = require("./routes/admin/evaluate")
+var noRemarkOrder = require("./routes/admin/tradingOrder/noRemarkOrder")
+var refundOrder = require("./routes/admin/tradingOrder/refundOrder")
+var dishesKind = require("./routes/admin/searchDishes/dishesKind")
+var personalInfomation = require("./routes/admin/personnalInfornation/personalInfomation")
+var modifyPersonalInfomation = require("./routes/admin/personnalInfornation/modifyPersonalInfomation")
+var getEvaluate = require("./routes/admin/getEvaluate")
 var app = express();
 const session = require('express-session');
 const http = require('http');
 //设置跨域访问  
 app.all('*', (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  // res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+   //用于判断request来自ajax还是传统请求
+   res.header("Access-Control-Allow-Headers", " Origin, X-Requested-With, Content-Type, Accept");
+  // res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
   res.header("X-Powered-By", ' 3.2.1');
-  // res.header("Content-Type", "application/json;charset=utf-8");
-  res.header("Content-Type", "");
+  res.header("Content-Type", "application/json;charset=utf-8");
+  // res.header("Content-Type", "");
   var url = req.url;
   var handlerUrl = url.split('?')
   console.log(handlerUrl[0]+"38行")
   //token拦截器,未登录无法访问
   if (handlerUrl[0] == '/getCode' || handlerUrl[0] == '/register' || handlerUrl[0] == '/login' || handlerUrl[0] == '/codeLogin'
-  || handlerUrl[0] =='/findPassword'|| handlerUrl[0] =='/resetPassword'||handlerUrl[0] =='/upload') {
+  || handlerUrl[0] =='/findPassword'|| handlerUrl[0] =='/resetPassword'||handlerUrl[0] =='/upload'||handlerUrl[0].indexOf("/images")!=-1) {
     console.log('11111新')
     next();
   } else {
@@ -135,11 +146,21 @@ app.use('/recommendDishes',recommendDishes)
 app.use('/searchDishes',searchDishes)
 app.use('/carDishes',carDishes)
 app.use("/pay",pay)
+app.use("/checkOrder",checkOrder)
+app.use("/searchOrder",searchOrder)
+app.use("/refund",refund)
+app.use("/evaluate",evaluate)
+app.use("/noRemarkOrder",noRemarkOrder)
+app.use("/refundOrder",refundOrder)
+app.use("/dishesKind",dishesKind)
+app.use("/personalInfomation",personalInfomation)
+app.use("/modifyPersonalInfomation",modifyPersonalInfomation)
+app.use("/getEvaluate",getEvaluate)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
-
+ 
 
 
 // error handler

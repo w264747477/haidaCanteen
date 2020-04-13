@@ -13,6 +13,7 @@ let selectAll = (sql,callback)=>{
     console.log(sql)
     connection.query(sql,(err,result)=>{
         if(err){
+            console.log(err)
             console.log('错误信息-',err.sqlMessage);
             let errNews = err.sqlMessage;
             callback(errNews,'');

@@ -29,6 +29,7 @@ router.get('/', function (req, res, next) {
     const param = req.query || req.params;
     pMobile = param.mobile;
     pCode = param.code;
+    console.log( pMobile+ pCode)
     var code = '';
     let flag = false;
     let codeFlag = false;
@@ -121,12 +122,15 @@ router.get('/', function (req, res, next) {
 
 
                     res.json({ "code": "000000", "msg": "登录成功", "data": tokens });
+                    return;
                 } else {
                     res.json({ "code": "HD0001", "msg": "验证码错误" });
+                    return;
                 }
 
             } else {
                 res.json({ "code": "HD0003", "msg": "手机号未注册" })
+                return;
             }
 
         })

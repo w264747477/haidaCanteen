@@ -66,6 +66,12 @@ router.get('/', function (req, res, next) {
                         return;
                     };
                 })
+                db.insertData("personalInfomation", { name: "海大用户", mobile: param.mobile }, function (err, data, fields) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    };
+                })
                 res.json({ "code": "000000", "msg": "注册成功", "data": null })
             } else {
                 res.json({ "code": "HD0001", "msg": "验证码错误" })
