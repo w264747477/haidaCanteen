@@ -13,7 +13,7 @@ client.on('connect', () => {
 })
 
 //验证redis
-client.auth(config.password);
+// client.auth(config.password);
 
 const redisHelper = {};
 
@@ -56,6 +56,20 @@ redisHelper.getString = (key) => {
             resolve(result)
         });
     })
+}
+    redisHelper.delString = (key) => {
+        return new Promise((resolve, reject) => {
+            client.del(key, function (err, result) {
+                if (err) {
+                    console.log('错误')
+                    console.log(err);
+                    reject(err)
+                }
+                console.log(result)
+                resolve(result)
+            });
+        })
+
 }
 
 module.exports = redisHelper;

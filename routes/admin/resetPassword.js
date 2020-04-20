@@ -10,12 +10,11 @@ router.get('/', function(req, res, next) {
     pPassword = param.password
     pCode = param.code;
     const c = redis.getString(pMobile)
-    var code = '';
+  
     c.then((data) => {
         console.log(data + '39行')
-        code = data
-    })
-    db.selectAll('SELECT * from register', function (err, data, fields) {
+     var  code = data
+     db.selectAll('SELECT * from register', function (err, data, fields) {
         if (err) {
             console.log(err);
             return;
@@ -41,20 +40,21 @@ router.get('/', function(req, res, next) {
                 };
             })
                res.json({"code":"000000","msg":"重置密码成功"})
+               redis.delString(pMobile)
                return;
            }else{
             res.json({ "code": "HD0001", "msg": "验证码错误" })
             return;
            }
-       }else{
-        res.json({ "code": "HD0003", "msg": "手机号未注册" })
-        return;
-       }
+       }    
    }
+   res.json({ "code": "HD0003", "msg": "手机号未注册" })
 
 
 
     })
+    })
+    
 
 });
 

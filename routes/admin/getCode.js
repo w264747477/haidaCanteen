@@ -26,8 +26,9 @@ let changeNum=getCode();
 const param = req.query || req.params;
 const mobile = param.mobile;
 console.log(mobile)
+
 redis.setString(mobile,changeNum,360)
-// sendMessage.sendMessage(mobile, changeNum,'食堂点餐','SMS_186596258',`{"code":'${changeNum}'}`)
+//  sendMessage.sendMessage(mobile, changeNum,'食堂点餐','SMS_186596258',`{"code":'${changeNum}'}`)
 resout.json({
     code:"000000",
     msg:"Ok",

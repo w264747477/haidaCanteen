@@ -30,110 +30,112 @@ router.get('/', function (req, res, next) {
     pMobile = param.mobile;
     pCode = param.code;
     console.log( pMobile+ pCode)
-    var code = '';
+   
     let flag = false;
     let codeFlag = false;
     
     console.log(pMobile)
     var c = redis.getString(pMobile)
     c.then((data) => {
-        console.log('48行' + data)
-        code = data
-        console.log('48行' + code)
+      
+      var  code = data
+      console.log(param);
+      db.selectAll('SELECT * from register', function (err, data, fields) {
+          //判断验证码是否正确
+          console.log('52行' + code)
+          console.log('53行' + pCode)
+          if (code == pCode) {
+              console.log('53行')
+              codeFlag = true;
+            
+          }
+          if (err) {
+              console.log(err);
+              return;
+          };
+          // this.a = JSON.parse(JSON.stringify(data));
+          this.a = data
+          // console.log(this.a);
+  
+  
+  
+  
+  
+          console.log(pMobile)
+  
+  
+          for (var i = 0; i < this.a.length; i++) {
+              aMobile = this.a[i].mobile;
+  
+              //判断手机号是否注册
+              if (aMobile == pMobile) {
+                  flag = true;
+              }
+  
+          }
+          //响应
+          if (flag) {
+  
+              if (codeFlag) {
+                  const tokens = token.createToken(param.mobile)
+                  const tok = "tok"
+                  db.selectAll('SELECT * from tok', function (err, data, fields) {
+                      if (err) {
+                          console.log(err);
+                          return;
+                      };
+                      let isLogin = true;
+                      var mobileList = data;
+                      for (var i = 0; i < mobileList.length; i++) {
+                          if (mobileList[i].mobile == pMobile) {
+                              console.log('92行')
+                              isLogin = false;
+                          }
+                      }
+                      console.log(isLogin)
+                      if (isLogin) {
+                          db.insertData(tok, { mobile: param.mobile, token: tokens }, function (err, data, fields) {
+                              if (err) {
+                                  console.log(err);
+                                  return;
+                              };
+                          })
+                      } else {
+                          console.log('正在更新')
+                          // db.updateData('tok', {token :tokens}, {mobile :'17383062157'},{})
+                          db.updateData(tok, {token : tokens}, {mobile : pMobile}, function (err, data, fields) {
+      
+                              console.log('更新成功')
+                              if (err) {
+                                  console.log(err);
+                                  return;
+                              };
+                          })
+                      }
+  
+                  })
+              
+  
+  
+                      res.json({ "code": "000000", "msg": "登录成功", "data": tokens });
+                      redis.delString(pMobile)
+                      return;
+                  } else {
+                      res.json({ "code": "HD0001", "msg": "验证码错误" });
+                      return;
+                  }
+  
+              } else {
+                  res.json({ "code": "HD0003", "msg": "手机号未注册" })
+                  return;
+              }
+  
+          })
+
     })
 
 
-    console.log(param);
-    db.selectAll('SELECT * from register', function (err, data, fields) {
-        //判断验证码是否正确
-        console.log('52行' + code)
-        console.log('53行' + pCode)
-        if (code == pCode) {
-            console.log('53行')
-            codeFlag = true;
-          
-        }
-        if (err) {
-            console.log(err);
-            return;
-        };
-        // this.a = JSON.parse(JSON.stringify(data));
-        this.a = data
-        // console.log(this.a);
-
-
-
-
-
-        console.log(pMobile)
-
-
-        for (var i = 0; i < this.a.length; i++) {
-            aMobile = this.a[i].mobile;
-
-            //判断手机号是否注册
-            if (aMobile == pMobile) {
-                flag = true;
-            }
-
-        }
-        //响应
-        if (flag) {
-
-            if (codeFlag) {
-                const tokens = token.createToken(param.mobile)
-                const tok = "tok"
-                db.selectAll('SELECT * from tok', function (err, data, fields) {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    };
-                    let isLogin = true;
-                    var mobileList = data;
-                    for (var i = 0; i < mobileList.length; i++) {
-                        if (mobileList[i].mobile == pMobile) {
-                            console.log('92行')
-                            isLogin = false;
-                        }
-                    }
-                    console.log(isLogin)
-                    if (isLogin) {
-                        db.insertData(tok, { mobile: param.mobile, token: tokens }, function (err, data, fields) {
-                            if (err) {
-                                console.log(err);
-                                return;
-                            };
-                        })
-                    } else {
-                        console.log('正在更新')
-                        // db.updateData('tok', {token :tokens}, {mobile :'17383062157'},{})
-                        db.updateData(tok, {token : tokens}, {mobile : pMobile}, function (err, data, fields) {
-    
-                            console.log('更新成功')
-                            if (err) {
-                                console.log(err);
-                                return;
-                            };
-                        })
-                    }
-
-                })
-            
-
-
-                    res.json({ "code": "000000", "msg": "登录成功", "data": tokens });
-                    return;
-                } else {
-                    res.json({ "code": "HD0001", "msg": "验证码错误" });
-                    return;
-                }
-
-            } else {
-                res.json({ "code": "HD0003", "msg": "手机号未注册" })
-                return;
-            }
-
-        })
+   
 
 })
 module.exports = router;

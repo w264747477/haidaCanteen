@@ -20,67 +20,69 @@ router.get('/', function (req, res, next) {
     console.log(param)
     const login = "login"
     const c = redis.getString(pMobile)
-    var code = '';
+  
     c.then((data) => {
         console.log(data + '39行')
-        code = data
+      var  code = data
+      console.log(code + '37行')
+
+
+      db.selectAll('SELECT * from register', function (err, data, fields) {
+          if (pCode == code) {
+              codeFlag = true;
+              console.log('验证码正确')
+          }
+          if (err) {
+              console.log(err);
+              return;
+          };
+          a = data;
+          // console.log(a)
+          console.log(a)
+  
+          for (var i = 0; i < a.length; i++) {
+              aMobile = a[i].mobile;
+              console.log('62行' + aMobile)
+              console.log('63行' + pMobile)
+              if (aMobile == pMobile) {
+                  console.log('64行')
+                  flag = false;
+              }
+              console.log(flag)
+          }
+          console.log(flag)
+          if (flag) {
+  
+  
+  
+              if (codeFlag) {
+                  const register = "register"
+                  db.insertData(register, { mobile: param.mobile, password: param.password }, function (err, data, fields) {
+                      if (err) {
+                          console.log(err);
+                          return;
+                      };
+                  })
+                  db.insertData("personalInfomation", { name: "海大用户", mobile: param.mobile }, function (err, data, fields) {
+                      if (err) {
+                          console.log(err);
+                          return;
+                      };
+                  })
+                  res.json({ "code": "000000", "msg": "注册成功", "data": null })
+                  redis.delString(pMobile)
+              } else {
+                  res.json({ "code": "HD0001", "msg": "验证码错误" })
+              }
+  
+          } else {
+              res.json({ "code": "HD0002", "msg": "手机号已注册" })
+          }
+      })
     })
 
 
-    console.log(code + '37行')
-
-
-    db.selectAll('SELECT * from register', function (err, data, fields) {
-        if (pCode == code) {
-            codeFlag = true;
-            console.log('验证码正确')
-        }
-        if (err) {
-            console.log(err);
-            return;
-        };
-        a = data;
-        // console.log(a)
-        console.log(a)
-
-        for (var i = 0; i < a.length; i++) {
-            aMobile = a[i].mobile;
-            console.log('62行' + aMobile)
-            console.log('63行' + pMobile)
-            if (aMobile == pMobile) {
-                console.log('64行')
-                flag = false;
-            }
-            console.log(flag)
-        }
-        console.log(flag)
-        if (flag) {
-
-
-
-            if (codeFlag) {
-                const register = "register"
-                db.insertData(register, { mobile: param.mobile, password: param.password }, function (err, data, fields) {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    };
-                })
-                db.insertData("personalInfomation", { name: "海大用户", mobile: param.mobile }, function (err, data, fields) {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    };
-                })
-                res.json({ "code": "000000", "msg": "注册成功", "data": null })
-            } else {
-                res.json({ "code": "HD0001", "msg": "验证码错误" })
-            }
-
-        } else {
-            res.json({ "code": "HD0002", "msg": "手机号已注册" })
-        }
-    })
+    
 })
 
 
